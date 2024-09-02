@@ -1,0 +1,11 @@
+docker compose build
+docker compose up -d
+docker compose exec -ti php-fpm composer install
+docker compose exec -ti php-fpm npm install
+docker compose exec -ti php-fpm php artisan key:generate
+docker compose exec -ti php-fpm php artisan migrate
+docker compose exec -ti php-fpm php artisan db:seed
+docker compose exec -ti php-fpm php npm run build
+docker compose exec -ti php-fpm php artisan config:cache
+docker compose exec -ti php-fpm php artisan route:cache
+docker compose exec -ti php-fpm chmod -R 0777 /var/www/html/storage /var/www/html/bootstrap/cache
